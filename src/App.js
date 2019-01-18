@@ -1,28 +1,65 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import "./App.css";
+import Login from "./Login";
+import Button from "@material-ui/core/Button";
+import AddIcon from "@material-ui/icons/Add";
+import Dashboard from "./Dashboard";
+import FloatingActionButton from "./FloatingActionButton";
+// import firebase from "firebase";
+import AddEntry from "./AddEntry";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
+const theme = createMuiTheme({
+	palette: {
+		primary: {
+			main: "#558b2f",
+		},
+		secondary: {
+			main: "#b39ddb",
+		},
+	},
+});
+
+export function logout() {
+	// firebase
+	// 	.auth()
+	// 	.signOut()
+	// 	.then(function() {
+	// 		// Sign-out successful.
+	// 		console.log("Sign Out Successful");
+	// 	})
+	// 	.catch(function(error) {
+	// 		// An error happened.
+	// 	});
+	console.log("logout");
+}
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+	// constructor(props) {
+	// 	super(props);
+	// 	this.state = { user: null };
+	// }
+	// componentDidMount() {
+	// 	firebase.auth().onAuthStateChanged(user => {
+	// 		if (user) {
+	// 			console.log(user);
+	// 			this.setState({ user });
+	// 			// User is signed in.
+	// 		} else {
+	// 			// No user is signed in.
+	// 			this.setState({ user: null });
+	// 		}
+	// 	});
+	// }
+	render() {
+		return (
+			<MuiThemeProvider theme={theme} className="App">
+				<Login />
+
+				{/* <Dashboard /> */}
+			</MuiThemeProvider>
+		);
+	}
 }
 
 export default App;

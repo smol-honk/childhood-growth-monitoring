@@ -1,0 +1,60 @@
+sex, weight(kg), height(cm), head circumfrence, dob, date of measurement 
+
+* boy or girl
+* Get age in months
+
+*Age in months:
+1.5 = 1.0-1.99
+2.5=2.0-2.99
+....
+
+*table gives you LMS from age in months
+X = weight, height, head circumfrence
+M = M from the table
+
+if L != 0:
+	Z = ((x/m)exp(l) - 1)/(l*s)
+
+if L == 0:
+	Z = ln(X/M)/S
+
+Standard Normal table needed
+
+Column that is a Z will represent the 10th place
+horizontal rows on top will represent the 100th place -- may need to round
+then multiply by 100 to get percentile
+
+
+For all length
+10, 25, 50, 75, 85th percentile 
+
+overweight: 85th, obese: 95th
+----
+x-axis: date or age in months
+make sure it's labeled on both axis
+popover/tooltip: click on show date added and age, height and weight
+* have the most recent point in graph be larger
+* Make percentile lines correlate with graph
+Time Period Intervals:
+List all developmental milestones by category w/time periods & listed by time periods
+
+* Change all implementations to be select sex instead of select gender
+
+* Cross percentiles
+	- Crosses 2 percentiles, banner
+		- Need time frame too
+	-  When above 85th percentile, banner
+	- Check out intervention strategies
+
+
+Meeting 01/18/19:
+* Have two charts showing percentile as y-axis, and another one with weights as y-axis
+* Ask Dr. Duncan: How do we want to categorize milestones in the app
+* For the on coming app --  checkbox for when milestone was met
+* Well Child Visit -- Dr. Shultz 
+* For the Prototype:
+	- milestones
+	- Education
+	- intervention strategies
+* double checking which percentiles
+* auto convert cm and in

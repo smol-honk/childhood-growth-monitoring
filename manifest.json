@@ -1,6 +1,6 @@
 {
-	"shortname": "Growth App",
 	"name": "Child Growth App",
+	"short_name": "Growth App",
 	"lang": "en-US",
 	"start_url": ".",
 	"display": "standalone",

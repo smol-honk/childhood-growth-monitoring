@@ -7,6 +7,7 @@ import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
@@ -14,15 +15,23 @@ import Badge from "@material-ui/core/Badge";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { mainListItems, secondaryListItems } from "./listItems";
 import "./wtrlinf";
+import { milestones } from "./wtrlinf";
 import AddEntry from "./AddEntry";
 import { Paper, Grid, Tabs, Tab, SwipeableDrawer } from "@material-ui/core";
 import SimpleTable from "./SimpleTable";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import moment from "moment";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import PeopleIcon from "@material-ui/icons/People";
+import BarChartIcon from "@material-ui/icons/BarChart";
+import Education from "./Education";
+import Milestones from "./Milestones";
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 const standardPercentiles = [
 	[10, "red"],
 	[25, "#82ca9d"],
@@ -30,7 +39,7 @@ const standardPercentiles = [
 	[75, "#ffc658"],
 	[85, "red"],
 ];
-const styles = theme => ({
+const styles = (theme) => ({
 	rootTab: {
 		flexGrow: 1,
 	},
@@ -121,6 +130,8 @@ class Dashboard extends React.Component {
 			open: false,
 			entries: [],
 			value: 0,
+			page: "dashboard",
+			chartType: false,
 		};
 		this.entryRef = null;
 	}
@@ -135,7 +146,7 @@ class Dashboard extends React.Component {
 	handleDrawerClose = () => {
 		this.setState({ open: false });
 	};
-	saveEntry = entry => {
+	saveEntry = (entry) => {
 		const newEntries = this.state.entries;
 		newEntries.push(entry);
 		this.setState({ entries: newEntries });
@@ -143,8 +154,14 @@ class Dashboard extends React.Component {
 
 	render() {
 		const { childValues, classes } = this.props;
-		const { entries, value, open } = this.state;
+		const { entries, value, open, page, chartType } = this.state;
 		const { sex, birthdate } = childValues;
+		const currentAge = moment
+			.duration(moment().diff(moment(birthdate)))
+			.as("months");
+
+		window.moment = moment;
+		window.currentAge = currentAge;
 		let length,
 			weight,
 			percentile = "N/A";
@@ -154,13 +171,44 @@ class Dashboard extends React.Component {
 		} else {
 			({ length, weight, percentile } = entries[entries.length - 1]);
 		}
+		const mainListItems = (
+			<div>
+				<ListItem
+					button
+					selected={page === "dashboard"}
+					onClick={(e) => this.setState({ page: "dashboard" })}>
+					<ListItemIcon>
+						<DashboardIcon />
+					</ListItemIcon>
+					<ListItemText primary="Dashboard" />
+				</ListItem>
+
+				<ListItem
+					button
+					selected={page === "education"}
+					onClick={(e) => this.setState({ page: "education" })}>
+					<ListItemIcon>
+						<PeopleIcon />
+					</ListItemIcon>
+					<ListItemText primary="Education" />
+				</ListItem>
+				<ListItem
+					button
+					selected={page === "milestones"}
+					onClick={(e) => this.setState({ page: "milestones" })}>
+					<ListItemIcon>
+						<BarChartIcon />
+					</ListItemIcon>
+					<ListItemText primary="Milestones" />
+				</ListItem>
+			</div>
+		);
 
 		const allData = {
 			xAxisCategories: entries.reduce(
 				(acc, curr) => [...acc, curr.age],
 				[]
-			),
-			// 10, 25, 50, 75, 85th percentile
+			), // 10, 25, 50, 75, 85th percentile
 			ten: entries.reduce(
 				(acc, curr) => [...acc, parseFloat(curr["10"])],
 				[]
@@ -181,19 +229,76 @@ class Dashboard extends React.Component {
 				(acc, curr) => [...acc, parseFloat(curr["95"])],
 				[]
 			),
-
 			weightArray: entries.reduce(
-				(acc, curr) => [...acc, parseInt(curr.weight)],
+				(acc, curr) => [...acc, parseFloat(curr.weight)],
+				[]
+			),
+			percentileArray: entries.reduce(
+				(acc, curr) => [...acc, parseFloat(curr.percentile)],
 				[]
 			),
 		};
 		console.log(allData);
+		const highchartsPercentileOptions = {
+			chart: { type: "spline" },
+			title: { text: "Weight Percentiles Chart" },
+			yAxis: {
+				title: { text: "Percentile" },
+				plotLines: [
+					{
+						color: "#FF0000",
+						width: 1,
+						label: { text: "10th Percentile" },
+						dashStyle: "longdashdot",
+						value: 10,
+					},
+					{
+						color: "#FF0000",
+						width: 1,
+						label: { text: "25th Percentile" },
+						dashStyle: "longdashdot",
+						value: 25,
+					},
+					{
+						color: "#FF0000",
+						width: 1,
+						label: { text: "50th Percentile" },
+						dashStyle: "longdashdot",
+						value: 50,
+					},
+					{
+						color: "#FF0000",
+						width: 1,
+						label: { text: "75th Percentile" },
+						dashStyle: "longdashdot",
+						value: 75,
+					},
+					{
+						color: "#FF0000",
+						width: 1,
+						label: { text: "95th Percentile" },
+						dashStyle: "longdashdot",
+						value: 95,
+					},
+				],
+			},
+			xAxis: { type: "category", categories: allData.xAxisCategories },
+			legend: {
+				layout: "vertical",
+				align: "right",
+				verticalAlign: "middle",
+			},
+			plotOptions: { series: { label: { connectorAllowed: false } } },
+			series: [
+				{ name: "Child's Percentiles", data: allData.percentileArray },
+			],
+		};
 		const highchartsOptions = {
 			chart: { type: "spline", zoomType: "xy" },
 			title: { text: "Weight Chart" },
 			subtitle: { text: "With accompanying percentiles" },
 			xAxis: { type: "category", categories: allData.xAxisCategories },
-			yAxis: { title: { text: "Weight (kg)" } },
+			yAxis: { title: { text: "Weight (kg)" }, allowDecimals: true },
 			tooltip: { valueSuffix: " kg", crosshairs: true, shared: true },
 			legend: { align: "left", verticalAlign: "top", borderWidth: 0 },
 			plotOptions: {
@@ -213,9 +318,17 @@ class Dashboard extends React.Component {
 					data: allData.weightArray,
 					marker: { radius: 4 },
 					lineWidth: 4,
+					dataLabels: {
+						enabled: true,
+					},
 				},
 			],
 			navigation: { menuItemStyle: { fontSize: "10px" } },
+		};
+		const PAGE_NAME = {
+			dashboard: "Dashboard",
+			education: "Education",
+			milestones: "Milestones",
 		};
 		return (
 			<div className={classes.root}>
@@ -248,9 +361,13 @@ class Dashboard extends React.Component {
 							color="inherit"
 							noWrap
 							className={classes.title}>
-							Dashboard
+							{PAGE_NAME[page]}
 						</Typography>
-						<IconButton color="inherit">
+						<IconButton
+							color="inherit"
+							onClick={(e) =>
+								this.setState({ chartType: !chartType })
+							}>
 							<Badge badgeContent={4} color="secondary">
 								<NotificationsIcon />
 							</Badge>
@@ -265,90 +382,102 @@ class Dashboard extends React.Component {
 						tabIndex={0}
 						role="button"
 						onClick={() => this.setState({ open: false })}
-						onKeyDown={() => this.setState({ open: false })}>
+						onKeyDown={() =>
+							this.setState({
+								open: false,
+							})
+						}>
 						{mainListItems}
 					</div>
 				</SwipeableDrawer>
-				{/* <Drawer
-					variant="permanent"
-					classes={{
-						paper: classNames(
-							classes.drawerPaper,
-							!this.state.open && classes.drawerPaperClose
-						),
-					}}
-					open={open}>
-					<div className={classes.toolbarIcon}>
-						<IconButton onClick={this.handleDrawerClose}>
-							<ChevronLeftIcon />
-						</IconButton>
-					</div>
-					<Divider />
-					<List>{mainListItems}</List>
-					<Divider />
-				</Drawer> */}
+
 				<main className={classes.content}>
 					<div className={classes.appBarSpacer} />
-
-					<Paper className={classNames(classes.tableContainer)}>
-						<Grid
-							className={classes.pad}
-							container
-							direction="row"
-							justify="center"
-							alignItems="center">
-							<Grid item xs={12}>
-								<Typography
-									variant="h4"
-									align="center"
-									gutterBottom
-									component="h2">
-									{percentile}th Percentile
-								</Typography>
+					{page === "milestones" && <Milestones />}
+					{page === "education" && <Education />}
+					{page === "dashboard" && (
+						<Paper className={classNames(classes.tableContainer)}>
+							<Grid
+								className={classes.pad}
+								container
+								direction="row"
+								justify="center"
+								alignItems="center">
+								<Grid item xs={12}>
+									<Typography
+										variant="h4"
+										align="center"
+										gutterBottom
+										component="h2">
+										{percentile}th Percentile
+									</Typography>
+								</Grid>
 							</Grid>
-							{/* <Grid item xs={6}>
-								<Typography
-									variant="h4"
-									align="center"
-									gutterBottom
-									component="h2">
-									Percentile
-								</Typography>
-							</Grid> */}
-						</Grid>
 
-						<div className={classes.tableContainer}>
-							<Paper className={classes.rootTab}>
-								<Tabs
-									value={this.state.value}
-									onChange={this.handleChange}
-									indicatorColor="primary"
-									textColor="primary"
-									centered>
-									<Tab label="Weight Chart" />
-									<Tab label="Milestones" />
-								</Tabs>
+							<div className={classes.tableContainer}>
+								<Paper className={classes.rootTab}>
+									<Tabs
+										value={this.state.value}
+										onChange={this.handleChange}
+										indicatorColor="primary"
+										textColor="primary"
+										centered>
+										<Tab label="Weight Chart" />
+										<Tab label="Milestones" />
+									</Tabs>
 
-								{value === 0 && (
-									<Typography
-										component="div"
-										style={{ padding: 8 * 3, zIndex: -1 }}>
-										<HighchartsReact
-											highcharts={Highcharts}
-											options={highchartsOptions}
-										/>
-									</Typography>
-								)}
-								{value === 1 && (
-									<Typography
-										component="div"
-										style={{ padding: 8 * 3 }}>
-										<SimpleTable />
-									</Typography>
-								)}
-							</Paper>
-						</div>
-					</Paper>
+									{value === 0 && (
+										<Typography
+											component="div"
+											style={{
+												padding: 8 * 3,
+												zIndex: -1,
+											}}>
+											<HighchartsReact
+												highcharts={Highcharts}
+												options={
+													chartType
+														? highchartsPercentileOptions
+														: highchartsOptions
+												}
+											/>
+										</Typography>
+									)}
+									{value === 1 && (
+										<Typography
+											component="div"
+											style={{ padding: 8 * 3 }}>
+											<Typography
+												variant="h5"
+												align="center"
+												gutterBottom>
+												Expected Milestones for your{" "}
+												{currentAge.toFixed(1)} Month
+												Old
+											</Typography>
+											<List>
+												{milestones[
+													(
+														Math.ceil(currentAge) +
+														0.5
+													).toString()
+												]
+													.split(",")
+													.map((m, i) => (
+														<ListItem key={i}>
+															<ListItemText
+																inset
+																primary={m.trim()}
+															/>
+														</ListItem>
+													))}
+											</List>
+										</Typography>
+									)}
+								</Paper>
+							</div>
+						</Paper>
+					)}
 				</main>
 			</div>
 		);

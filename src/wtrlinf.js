@@ -4,12 +4,38 @@
  * Created Date: Monday December 24th 2018
  * Author: Lisa Zhang
  * -----
- * Last Modified: Sunday January 13th 2019 5:20:27 pm
+ * Last Modified: Friday January 25th 2019 11:29:30 am
  * Modified By: Lisa Zhang at <lisazhang@email.arizona.edu>
  * -----
  * Copyright (c) 2018 College of Public Health
  */
 import * as ss from "simple-statistics";
+export const milestones = {
+	1: "On stomach, lifts head, Exclusive breastfeeding",
+	1.5: "On stomach, lifts head, Exclusive breastfeeding",
+	2.5: "On stomach, lifts head,lifts chest with arm support, Rolls over, Exclusive breastfeeding",
+	3.5: "Reaches for object, On stomach, lifts chest with arm support, Rolls over, Exclusive breastfeeding",
+	4.5: "Reaches for object, Turns to voice, Rolls over, Exclusive breastfeeding",
+	5.5: "Feeds self crackers, Turns to voice, Sits without support, Stands with support,Exclusive breastfeeding",
+	6.5: "Feeds self crackers, Turns to voice, Sits without support, Stands with support, Pulls self to stand, Breastfeeding with gradual introduction of solid foods, Starting cereal and spoon",
+	7.5: "Feeds self crackers,Turns to voice,Sits without support,Stands with support,Pulls self to stand,rawls,Walks holding onto furniture,Breastfeeding with gradual introduction of solid foods",
+	8.5: "Stands with support,Pulls self to stand,Crawls,Walks holding onto furniture,Breastfeeding with gradual introduction of solid foods",
+	9.5: "Neat finger grasp,Stands with support,Pulls self to stand,Crawls,Walks holding onto furniture,Breastfeeding with gradual introduction of solid food",
+	10.5: "Drinks from cup,Neat finger grasp,Crawls,Walks holding onto furniture,Stands alone well,Breastfeeding with gradual introduction of solid foods",
+	11.5: "Drinks from cup,Neat finger grasp,Crawls,Walks holding onto furniture,Stands alone well,Walks alone well,Breastfeeding with gradual introduction of solid foods",
+	12.5: "Drinks from cup,Neat finger grasp,3 words, other than ‘mama’ and ‘dada’,Walks holding onto furniture,Stands alone well,Walks alone well,Walks backwards",
+	13.5: "Drinks from cup,Neat finger grasp,3 words, other than ‘mama’ and ‘dada’,Stands alone well,Walks alone well,Walks backwards",
+	14.5: "Drinks from cup,Neat finger grasp,3 words, other than ‘mama’ and ‘dada’,Points to named body part,Walks alone well,Walks backwards,Walks up steps,Kicks ball forward",
+	15.5: "Drinks from cup,Tower of four cubes,3 words, other than ‘mama’ and ‘dada’,Points to named body part,Walks backwards,Walks up steps,Kicks ball forward",
+	16.5: "Helps in house with small tasks,Tower of four cubes,3 words, other than ‘mama’ and ‘dada’,Points to named body part,Walks backwards,Walks up steps,Kicks ball forward",
+	17.5: "Helps in house with small tasks,Tower of four cubes,3 words, other than ‘mama’ and ‘dada’,Points to named body part,Walks backwards,Walks up steps,Kicks ball forward",
+	18.5: "Helps in house with small tasks,Tower of four cubes,3 words, other than ‘mama’ and ‘dada’,Points to named body part,Walks backwards,Walks up steps,Kicks ball forward",
+	19.5: "Helps in house with small tasks,Tower of four cubes,3 words, other than ‘mama’ and ‘dada’,Points to named body part,Walks backwards,Walks up steps,Kicks ball forward",
+	20.5: "Helps in house with small tasks,Tower of four cubes,Points to named body part,Walks backwards,Walks up steps,Kicks ball forward",
+	21.5: "Helps in house with small tasks,Tower of four cubes,Points to named body part,Walks backwards,Walks up steps,Kicks ball forward",
+	22.5: "Helps in house with small tasks,Tower of four cubes,Points to named body part,Kicks ball forward",
+	23.5: "Helps in house with small tasks,Tower of four cubes,Kicks ball forward",
+};
 export const weightChart = {
 	Sex: {
 		1: [

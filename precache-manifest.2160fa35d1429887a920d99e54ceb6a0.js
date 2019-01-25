@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/childhood-growth-monitoring/static/css/main.61f66f65.chunk.css"
   },
   {
-    "revision": "3537c9cd0730f01f10b004639c4490a8",
+    "revision": "84d1b605b5d1a851a0308d0db4876edb",
     "url": "/childhood-growth-monitoring/index.html"
   }
 ];

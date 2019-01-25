@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/childhood-growth-monitoring/precache-manifest.2ca06c346be3953db33621fda21b25d6.js"
+  "/childhood-growth-monitoring/precache-manifest.2160fa35d1429887a920d99e54ceb6a0.js"
 );
 
 workbox.clientsClaim();

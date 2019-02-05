@@ -9,7 +9,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import FloatingActionButton from "./FloatingActionButton";
 import moment from "moment";
 import { calculatePercentile, getPercentileWeights } from "./wtrlinf";
-// import firebase from "firebase";
+import * as math from "mathjs";
+window.mathjs = math;
 
 export default class AddEntry extends React.Component {
 	constructor(props) {
@@ -18,6 +19,8 @@ export default class AddEntry extends React.Component {
 			open: this.props.initState,
 			weight: "",
 			length: "",
+			weightPounds: "",
+			lengthInches: "",
 		};
 		// this.user = firebase.auth().currentUser;
 	}
@@ -31,10 +34,11 @@ export default class AddEntry extends React.Component {
 	};
 
 	addMeasurementSubmit = () => {
-		const { weight, length } = this.state;
+		const { weight, length, weightPounds, lengthInches } = this.state;
 		const { sex, birthdate } = this.props;
+
 		const percentile =
-			calculatePercentile(sex, weight, length).toFixed(2) || "N/A";
+			calculatePercentile(sex, weight, length).toFixed() || "N/A";
 		const dateEntered = moment.utc().format("MM-DD-YYYY");
 		const ageEntered = moment
 			.duration(moment().diff(moment(birthdate)))
@@ -61,6 +65,8 @@ export default class AddEntry extends React.Component {
 		let entryData = {
 			age,
 			percentile,
+			weightPounds,
+			lengthInches,
 			weight,
 			length,
 			dateEntered,
@@ -101,21 +107,34 @@ export default class AddEntry extends React.Component {
 							autoFocus
 							margin="dense"
 							id="weight"
-							label="Child's Weight in kg"
+							label="Child's Weight in pounds (lbs)"
 							type="number"
-							onChange={e =>
-								this.setState({ weight: e.target.value })
-							}
+							onChange={(e) => {
+								let weight = math
+									.unit(parseFloat(e.target.value), "lbs")
+									.to("kg")
+									.toNumber();
+								this.setState({
+									weight,
+									weightPounds: parseFloat(e.target.value),
+								});
+							}}
 							fullWidth
 						/>
 						<TextField
 							id="length"
-							label="Child's Length in cm"
+							label="Child's Length in inches (in)"
 							type="number"
-							defaultValue="2018-05-24"
-							onChange={e =>
-								this.setState({ length: e.target.value })
-							}
+							onChange={(e) => {
+								const length = math
+									.unit(parseFloat(e.target.value), "in")
+									.to("cm")
+									.toNumber();
+								this.setState({
+									length,
+									lengthInches: parseFloat(e.target.value),
+								});
+							}}
 							InputLabelProps={{
 								shrink: true,
 							}}

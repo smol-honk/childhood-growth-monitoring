@@ -3,20 +3,12 @@ import PropTypes from "prop-types";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import DateFnsUtils from "@date-io/date-fns";
 
 import LockIcon from "@material-ui/icons/LockOutlined";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select";
-import NativeSelect from "@material-ui/core/NativeSelect";
 import MenuItem from "@material-ui/core/MenuItem";
 import { MuiPickersUtilsProvider } from "material-ui-pickers";
 import MomentUtils from "@date-io/moment";
@@ -25,7 +17,7 @@ import { DatePicker } from "material-ui-pickers";
 
 import { Formik } from "formik";
 
-const styles = theme => ({
+const styles = (theme) => ({
 	main: {
 		width: "auto",
 		display: "block", // Fix IE 11 issue.
@@ -101,26 +93,27 @@ class SignIn extends Component {
 						onSubmit={(values, actions) => {
 							this.setState({ childValues: values });
 						}}
-						render={props => (
+						render={(props) => (
 							<form
 								onSubmit={props.handleSubmit}
 								className={classes.form}>
 								<TextField
-									id="outlined-with-placeholder"
+									id="participant"
 									label="Participant Number"
 									placeholder="Participant Number"
 									className={classes.textField}
 									margin="normal"
-									variant="outlined"
 									name="participantNumber"
 									onChange={props.handleChange}
 								/>
 								<MuiPickersUtilsProvider utils={MomentUtils}>
 									<DatePicker
 										name="birthdate"
+										margin="normal"
 										label="Date of Birth"
+										className={classes.textField}
 										value={props.values.birthdate}
-										onChange={date => {
+										onChange={(date) => {
 											console.log(date);
 											console.log(props);
 											props.setFieldValue(
@@ -131,7 +124,7 @@ class SignIn extends Component {
 									/>
 								</MuiPickersUtilsProvider>
 								<TextField
-									id="standard-select-currency"
+									id="sex"
 									select
 									label="Select Sex"
 									className={classes.textField}

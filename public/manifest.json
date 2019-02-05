@@ -1,14 +1,24 @@
 {
 	"name": "Child Growth App",
+	"short_name": "Growth",
 	"lang": "en-US",
-	"start_url": ".",
+	"start_url": "https://amphithere.github.io/childhood-growth-monitoring/",
 	"display": "standalone",
 	"theme_color": "#558B2F",
 	"icons": [
 		{
 			"src": "favicon.ico",
-			"sizes": "64x64 32x32 24x24 16x16",
-			"type": "image/x-icon"
+			"sizes": "64x64 32x32 24x24 16x16"
+		},
+		{
+			"src": "app_icon.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		},
+		{
+			"src": "web_hi_res_512.png",
+			"type": "image/png",
+			"sizes": "512x512"
 		}
 	]
 }

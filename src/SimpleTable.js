@@ -40,24 +40,26 @@ function SimpleTable(props) {
 			<Table className={classes.table}>
 				<TableHead>
 					<TableRow>
-						<TableCell>Date</TableCell>
-						<TableCell numeric>Weight</TableCell>
-						<TableCell numeric>Length</TableCell>
+						<TableCell>Date Entered</TableCell>
+						<TableCell numeric>Weight (lbs)</TableCell>
+						<TableCell numeric>Length (in)</TableCell>
 						<TableCell numeric>Age (in Months)</TableCell>
-						<TableCell numeric>Percentile</TableCell>
+						<TableCell numeric>
+							Percentile (weight-length)
+						</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{data.map(n => {
+					{props.data.map((n, i) => {
 						return (
-							<TableRow key={n.id}>
+							<TableRow key={i}>
 								<TableCell component="th" scope="row">
-									{n.name}
+									{n.dateEntered}
 								</TableCell>
-								<TableCell numeric>{n.calories}</TableCell>
-								<TableCell numeric>{n.fat}</TableCell>
-								<TableCell numeric>{n.carbs}</TableCell>
-								<TableCell numeric>{n.protein}</TableCell>
+								<TableCell numeric>{n.weightPounds}</TableCell>
+								<TableCell numeric>{n.lengthInches}</TableCell>
+								<TableCell numeric>{n.ageEntered}</TableCell>
+								<TableCell numeric>{n.percentile}</TableCell>
 							</TableRow>
 						);
 					})}

@@ -9,14 +9,20 @@ import FloatingActionButton from "./FloatingActionButton";
 // import firebase from "firebase";
 import AddEntry from "./AddEntry";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+// text colors: #7D7C7A
+// dusty purple: #9d8ca1
+// old purple: #b39ddb
 
 const theme = createMuiTheme({
+	typography: {
+		useNextVariants: true,
+	},
 	palette: {
 		primary: {
 			main: "#558b2f",
 		},
 		secondary: {
-			main: "#b39ddb",
+			main: "#9d8ca1",
 		},
 	},
 });
@@ -53,7 +59,7 @@ class App extends Component {
 	// }
 	render() {
 		return (
-			<MuiThemeProvider theme={theme} className="App">
+			<MuiThemeProvider theme={theme}>
 				<Login />
 
 				{/* <Dashboard /> */}

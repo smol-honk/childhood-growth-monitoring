@@ -21,21 +21,40 @@
       homescreen on Android. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
 		<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+		<script
+			async
+			src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.6/pwacompat.min.js"
+			integrity="sha384-GOaSLecPIMCJksN83HLuYf9FToOiQ2Df0+0ntv7ey8zjUHESXhthwvq9hXAZTifA"
+			crossorigin="anonymous"
+		></script>
 
 		<meta name="mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="application-name" content="Child Growth App" />
-		<meta name="apple-mobile-web-app-title" content="Child Growth App" />
+		<meta name="application-name" content="Growth App" />
+		<meta name="apple-mobile-web-app-title" content="Growth App" />
 		<meta name="theme-color" content="#558B2F" />
 		<meta name="msapplication-navbutton-color" content="#558B2F" />
 		<meta
 			name="apple-mobile-web-app-status-bar-style"
 			content="black-translucent"
 		/>
-		<meta name="msapplication-starturl" content="/" />
+		<meta name="msapplication-starturl" content="." />
 		<meta
 			name="viewport"
 			content="width=device-width, initial-scale=1, shrink-to-fit=no"
+		/>
+
+		<link
+			rel="icon"
+			type="image/x-icon"
+			sizes="64x64 32x32 24x24 16x16"
+			href="favicon.ico"
+		/>
+		<link
+			rel="apple-touch-icon"
+			type="image/x-icon"
+			sizes="64x64 32x32 24x24 16x16"
+			href="favicon.ico"
 		/>
 		<!--
       Notice the use of %PUBLIC_URL% in the tags above.

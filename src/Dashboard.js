@@ -31,14 +31,10 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 import Education from "./Education";
 import Milestones from "./Milestones";
 
-const drawerWidth = 300;
-const standardPercentiles = [
-	[10, "red"],
-	[25, "#82ca9d"],
-	[50, "#B0B0B0"],
-	[75, "#ffc658"],
-	[85, "red"],
-];
+const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+const drawerWidth = 400;
+
 const styles = (theme) => ({
 	rootTab: {
 		flexGrow: 1,
@@ -121,6 +117,9 @@ const styles = (theme) => ({
 	h5: {
 		marginBottom: theme.spacing.unit * 2,
 	},
+	list: {
+		width: 250,
+	},
 });
 
 class Dashboard extends React.Component {
@@ -131,7 +130,6 @@ class Dashboard extends React.Component {
 			entries: [],
 			value: 0,
 			page: "dashboard",
-			chartType: false,
 		};
 		this.entryRef = null;
 	}
@@ -154,7 +152,7 @@ class Dashboard extends React.Component {
 
 	render() {
 		const { childValues, classes } = this.props;
-		const { entries, value, open, page, chartType } = this.state;
+		const { entries, value, open, page } = this.state;
 		const { sex, birthdate } = childValues;
 		const currentAge = moment
 			.duration(moment().diff(moment(birthdate)))
@@ -172,35 +170,48 @@ class Dashboard extends React.Component {
 			({ length, weight, percentile } = entries[entries.length - 1]);
 		}
 		const mainListItems = (
-			<div>
-				<ListItem
-					button
-					selected={page === "dashboard"}
-					onClick={(e) => this.setState({ page: "dashboard" })}>
-					<ListItemIcon>
-						<DashboardIcon />
-					</ListItemIcon>
-					<ListItemText primary="Dashboard" />
-				</ListItem>
+			<div className={classes.list}>
+				<List>
+					<ListItem
+						button
+						selected={page === "dashboard"}
+						onClick={(e) => this.setState({ page: "dashboard" })}>
+						<ListItemIcon>
+							<DashboardIcon />
+						</ListItemIcon>
+						<ListItemText primary="Dashboard" />
+					</ListItem>
 
-				<ListItem
-					button
-					selected={page === "education"}
-					onClick={(e) => this.setState({ page: "education" })}>
-					<ListItemIcon>
-						<PeopleIcon />
-					</ListItemIcon>
-					<ListItemText primary="Education" />
-				</ListItem>
-				<ListItem
-					button
-					selected={page === "milestones"}
-					onClick={(e) => this.setState({ page: "milestones" })}>
-					<ListItemIcon>
-						<BarChartIcon />
-					</ListItemIcon>
-					<ListItemText primary="Milestones" />
-				</ListItem>
+					<ListItem
+						button
+						selected={page === "education"}
+						onClick={(e) => this.setState({ page: "education" })}>
+						<ListItemIcon>
+							<PeopleIcon />
+						</ListItemIcon>
+						<ListItemText primary="Education" />
+					</ListItem>
+					<ListItem
+						button
+						selected={page === "milestones"}
+						onClick={(e) => this.setState({ page: "milestones" })}>
+						<ListItemIcon>
+							<BarChartIcon />
+						</ListItemIcon>
+						<ListItemText primary="Milestones" />
+					</ListItem>
+					<ListItem
+						button
+						selected={page === "measurements"}
+						onClick={(e) =>
+							this.setState({ page: "measurements" })
+						}>
+						<ListItemIcon>
+							<BarChartIcon />
+						</ListItemIcon>
+						<ListItemText primary="Past Measurements" />
+					</ListItem>
+				</List>
 			</div>
 		);
 
@@ -234,101 +245,107 @@ class Dashboard extends React.Component {
 				[]
 			),
 			percentileArray: entries.reduce(
-				(acc, curr) => [...acc, parseFloat(curr.percentile)],
+				(acc, curr) => [
+					...acc,
+					{
+						dateEntered: curr.dateEntered,
+						weight: curr.weightPounds,
+						length: curr.lengthInches,
+						y: parseFloat(curr.percentile),
+					},
+				],
 				[]
 			),
 		};
 		console.log(allData);
 		const highchartsPercentileOptions = {
-			chart: { type: "spline" },
-			title: { text: "Weight Percentiles Chart" },
+			chart: { type: "line" },
+			title: { text: "Weight-Length Percentiles Chart" },
+
 			yAxis: {
-				title: { text: "Percentile" },
-				plotLines: [
+				title: { text: "Percentile (weight-length)" },
+				tickPositions: [0, 10, 25, 50, 75, 85, 95, 100],
+				labels: {
+					formatter: function() {
+						return this.value + "th percentile";
+					},
+				},
+				min: 0,
+				max: 100,
+				plotBands: [
 					{
-						color: "#FF0000",
-						width: 1,
-						label: { text: "10th Percentile" },
-						dashStyle: "longdashdot",
-						value: 10,
+						// Light air
+						from: 0,
+						to: 10,
+						color: "rgba(68, 170, 213, 0.1)",
 					},
 					{
-						color: "#FF0000",
-						width: 1,
-						label: { text: "25th Percentile" },
-						dashStyle: "longdashdot",
-						value: 25,
+						// Light breeze
+						from: 10,
+						to: 25,
+						color: "rgba(0, 0, 0, 0)",
 					},
 					{
-						color: "#FF0000",
-						width: 1,
-						label: { text: "50th Percentile" },
-						dashStyle: "longdashdot",
-						value: 50,
+						// Gentle breeze
+						from: 25,
+						to: 50,
+						color: "rgba(68, 170, 213, 0.1)",
 					},
 					{
-						color: "#FF0000",
-						width: 1,
-						label: { text: "75th Percentile" },
-						dashStyle: "longdashdot",
-						value: 75,
+						// Moderate breeze
+						from: 50,
+						to: 75,
+						color: "rgba(0, 0, 0, 0)",
 					},
 					{
-						color: "#FF0000",
-						width: 1,
-						label: { text: "95th Percentile" },
-						dashStyle: "longdashdot",
-						value: 95,
+						// Fresh breeze
+						from: 75,
+						to: 85,
+						color: "rgba(68, 170, 213, 0.1)",
+					},
+					{
+						// Strong breeze
+						from: 85,
+						to: 95,
+						color: "rgba(0, 0, 0, 0)",
+					},
+					{
+						// High wind
+						from: 95,
+						to: 100,
+						color: "rgba(68, 170, 213, 0.1)",
 					},
 				],
 			},
+			tooltip: {
+				valueSuffix: "% (weight-length)",
+				crosshairs: true,
+				shared: true,
+				formatter: function() {
+					return this.points.reduce(function(s, point) {
+						console.log(point, "point", s, "s");
+						return `<b>Age Entered:</b> ${
+							point.x
+						} <br/> <b>Percentile:</b> ${point.y}<br/> <b>Date Entered:</b> ${point.point.dateEntered}<br/> <b>Weight:</b> ${point.point.weight} lbs<br/> <b>Length:</b> ${point.point.length} in`;
+					}, "<b>" + this.x + "</b>");
+				},
+			},
 			xAxis: { type: "category", categories: allData.xAxisCategories },
 			legend: {
+				align: "center",
+				verticalAlign: "top",
 				layout: "vertical",
-				align: "right",
-				verticalAlign: "middle",
 			},
-			plotOptions: { series: { label: { connectorAllowed: false } } },
 			series: [
 				{ name: "Child's Percentiles", data: allData.percentileArray },
 			],
 		};
-		const highchartsOptions = {
-			chart: { type: "spline", zoomType: "xy" },
-			title: { text: "Weight Chart" },
-			subtitle: { text: "With accompanying percentiles" },
-			xAxis: { type: "category", categories: allData.xAxisCategories },
-			yAxis: { title: { text: "Weight (kg)" }, allowDecimals: true },
-			tooltip: { valueSuffix: " kg", crosshairs: true, shared: true },
-			legend: { align: "left", verticalAlign: "top", borderWidth: 0 },
-			plotOptions: {
-				spline: {
-					dataLabels: { enabled: true },
-					states: { hover: { lineWidth: 5 } },
-				},
-			},
-			series: [
-				{ name: "10th Percentile", data: allData.ten },
-				{ name: "25th Percentile", data: allData.twentyfifth },
-				{ name: "50th Percentile", data: allData.fifty },
-				{ name: "75th Percentile", data: allData.seventyfive },
-				{ name: "95th Percentile", data: allData.ninetyfive },
-				{
-					name: "Child's Weight",
-					data: allData.weightArray,
-					marker: { radius: 4 },
-					lineWidth: 4,
-					dataLabels: {
-						enabled: true,
-					},
-				},
-			],
-			navigation: { menuItemStyle: { fontSize: "10px" } },
-		};
+
 		const PAGE_NAME = {
 			dashboard: "Dashboard",
 			education: "Education",
 			milestones: "Milestones",
+			measurements: "Past Measurements",
 		};
 		return (
 			<div className={classes.root}>
@@ -365,9 +382,7 @@ class Dashboard extends React.Component {
 						</Typography>
 						<IconButton
 							color="inherit"
-							onClick={(e) =>
-								this.setState({ chartType: !chartType })
-							}>
+							onClick={(e) => console.log("Clicked!")}>
 							<Badge badgeContent={4} color="secondary">
 								<NotificationsIcon />
 							</Badge>
@@ -375,6 +390,8 @@ class Dashboard extends React.Component {
 					</Toolbar>
 				</AppBar>
 				<SwipeableDrawer
+					disableBackdropTransition={!iOS}
+					disableDiscovery={iOS}
 					open={open}
 					onClose={() => this.setState({ open: false })}
 					onOpen={() => this.setState({ open: true })}>
@@ -395,6 +412,7 @@ class Dashboard extends React.Component {
 					<div className={classes.appBarSpacer} />
 					{page === "milestones" && <Milestones />}
 					{page === "education" && <Education />}
+					{page === "measurements" && <SimpleTable data={entries} />}
 					{page === "dashboard" && (
 						<Paper className={classNames(classes.tableContainer)}>
 							<Grid
@@ -410,6 +428,7 @@ class Dashboard extends React.Component {
 										gutterBottom
 										component="h2">
 										{percentile}th Percentile
+										(weight-length)
 									</Typography>
 								</Grid>
 							</Grid>
@@ -422,7 +441,7 @@ class Dashboard extends React.Component {
 										indicatorColor="primary"
 										textColor="primary"
 										centered>
-										<Tab label="Weight Chart" />
+										<Tab label="Weight-Length Chart" />
 										<Tab label="Milestones" />
 									</Tabs>
 
@@ -436,9 +455,7 @@ class Dashboard extends React.Component {
 											<HighchartsReact
 												highcharts={Highcharts}
 												options={
-													chartType
-														? highchartsPercentileOptions
-														: highchartsOptions
+													highchartsPercentileOptions
 												}
 											/>
 										</Typography>

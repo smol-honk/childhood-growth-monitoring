@@ -16,7 +16,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import "./wtrlinf";
-import { milestones } from "./wtrlinf";
+import { milestones, allmiles } from "./wtrlinf";
 import AddEntry from "./AddEntry";
 import { Paper, Grid, Tabs, Tab, SwipeableDrawer } from "@material-ui/core";
 import SimpleTable from "./SimpleTable";
@@ -265,55 +265,50 @@ class Dashboard extends React.Component {
 			yAxis: {
 				title: { text: "Percentile (weight-length)" },
 				tickPositions: [0, 10, 25, 50, 75, 85, 95, 100],
-				labels: {
-					formatter: function() {
-						return this.value + "th percentile";
-					},
-				},
 				min: 0,
 				max: 100,
 				plotBands: [
 					{
-						// Light air
+
 						from: 0,
 						to: 10,
-						color: "rgba(68, 170, 213, 0.1)",
+						color: "rgba(85, 139, 46, 0.1)",
 					},
 					{
-						// Light breeze
+
 						from: 10,
 						to: 25,
-						color: "rgba(0, 0, 0, 0)",
+						color: "rgba(85, 139, 46, 0.3)",
 					},
 					{
-						// Gentle breeze
+
 						from: 25,
 						to: 50,
-						color: "rgba(68, 170, 213, 0.1)",
+						color: "rgba(85, 139, 46, 0.6)",
 					},
 					{
-						// Moderate breeze
+
 						from: 50,
 						to: 75,
-						color: "rgba(0, 0, 0, 0)",
+						color: "rgba(85, 139, 46, 0.5)",
 					},
 					{
-						// Fresh breeze
+
 						from: 75,
 						to: 85,
-						color: "rgba(68, 170, 213, 0.1)",
+						color: "rgba(85, 139, 46, 0.4)",
 					},
 					{
-						// Strong breeze
+
 						from: 85,
 						to: 95,
-						color: "rgba(0, 0, 0, 0)",
+						color: "rgba(85, 139, 46, 0.3)",
 					},
 					{
-						// High wind
+
 						from: 95,
 						to: 100,
-						color: "rgba(68, 170, 213, 0.1)",
+						color: "rgba(85, 139, 46, 0.1)",
 					},
 				],
 			},
@@ -321,12 +316,12 @@ class Dashboard extends React.Component {
 				valueSuffix: "% (weight-length)",
 				crosshairs: true,
 				shared: true,
-				formatter: function() {
-					return this.points.reduce(function(s, point) {
+				formatter: function () {
+					return this.points.reduce(function (s, point) {
 						console.log(point, "point", s, "s");
 						return `<b>Age Entered:</b> ${
 							point.x
-						} <br/> <b>Percentile:</b> ${point.y}<br/> <b>Date Entered:</b> ${point.point.dateEntered}<br/> <b>Weight:</b> ${point.point.weight} lbs<br/> <b>Length:</b> ${point.point.length} in`;
+							} <br/> <b>Percentile:</b> ${point.y}th percentile<br/> <b>Date Entered:</b> ${point.point.dateEntered}<br/> <b>Weight:</b> ${point.point.weight} lbs<br/> <b>Length:</b> ${point.point.length} in`;
 					}, "<b>" + this.x + "</b>");
 				},
 			},
@@ -468,23 +463,31 @@ class Dashboard extends React.Component {
 												variant="h5"
 												align="center"
 												gutterBottom>
-												Expected Milestones for your{" "}
-												{currentAge.toFixed(1)} Month
-												Old
+												By{" "}
+												{currentAge.toFixed()} Month(s) of age {" "}
+												your child should be able to do...
 											</Typography>
-											<List>
-												{milestones[
+											<List style={{
+												width: '100%'
+											}}>
+												{allmiles[
 													(
-														Math.ceil(currentAge) +
-														0.5
+														Math.ceil(currentAge)
 													).toString()
 												]
-													.split(",")
 													.map((m, i) => (
 														<ListItem key={i}>
 															<ListItemText
-																inset
-																primary={m.trim()}
+																primary={m.milestoneType}
+																secondary={
+																	<React.Fragment>
+																		<Typography component="span" style={{
+																			display: 'inline',
+																		}} color="textPrimary">
+																			{m.milestone}
+																		</Typography>
+																	</React.Fragment>
+																}
 															/>
 														</ListItem>
 													))}

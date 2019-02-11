@@ -10,6 +10,557 @@
  * Copyright (c) 2018 College of Public Health
  */
 import * as ss from "simple-statistics";
+
+export const fineMotor = [
+	{
+		"Fine Motor": "Holds fingers closed",
+		"Range": "0 - 1 month",
+		"App": "1 month"
+	},
+	{
+		"Fine Motor": "Grasps reflexively",
+		"Range": "0 - 1 month",
+		"App": "1 month"
+	},
+	{
+		"Fine Motor": "Opens and shuts hands",
+		"Range": "2 - 4 months",
+		"App": "4 months"
+	},
+	{
+		"Fine Motor": "Grasps object",
+		"Range": "3 - 4 months",
+		"App": "4 months"
+	},
+	{
+		"Fine Motor": "Reaches for objects and transfers",
+		"Range": "4.5 - 8 months",
+		"App": "8 months"
+	},
+	{
+		"Fine Motor": "Rakes small object with 4 fingers",
+		"Range": "5 - 7 months",
+		"App": "7 months"
+	},
+	{
+		"Fine Motor": "Picks up small object with 3 fingers and thumb",
+		"Range": "7 - 11 months",
+		"App": "11 months"
+	},
+	{
+		"Fine Motor": "Bangs objects together",
+		"Range": "7 - 11 months",
+		"App": "11 months"
+	},
+	{
+		"Fine Motor": "Drops object in a cup",
+		"Range": "10 - 14 months",
+		"App": "14 months"
+	},
+	{
+		"Fine Motor": "Throws small ball a few feet while standing",
+		"Range": "10 - 16 months",
+		"App": "16 months"
+	},
+	{
+		"Fine Motor": "Scribbles spontaneously",
+		"Range": "12 - 17 months",
+		"App": "17 months"
+	},
+	{
+		"Fine Motor": "Drops object in and takes object out of a container",
+		"Range": "13 - 20 months",
+		"App": "20 months"
+	}
+];
+
+export const grossMotor = [
+	{
+		"Gross Motor": "Reflexively moves arms and legs",
+		"Range": "0 - 1 month",
+		"App": "1 month"
+	},
+	{
+		"Gross Motor": "Turns head to side when on stomach",
+		"Range": "0 - 1 month",
+		"App": "1 month"
+	},
+	{
+		"Gross Motor": "Holds chin up on stomach",
+		"Range": "0 - 3 months",
+		"App": "3 months"
+	},
+	{
+		"Gross Motor": "Lifts head and chest in stomach",
+		"Range": "2 - 3.5 months",
+		"App": "4 months"
+	},
+	{
+		"Gross Motor": "Supports on elbows and wrists on stomach",
+		"Range": "2.5 - 4.5 months",
+		"App": "5 months"
+	},
+	{
+		"Gross Motor": "Rolls over stomach to back",
+		"Range": "2 - 5.5 months",
+		"App": "6 months"
+	},
+	{
+		"Gross Motor": "Sits briefly without support",
+		"Range": "4 - 8 months",
+		"App": "8 months"
+	},
+	{
+		"Gross Motor": "Sits well without support",
+		"Range": "5 - 9 months",
+		"App": "9 months"
+	},
+	{
+		"Gross Motor": "Rolls over back to stomach",
+		"Range": "4 - 10 months",
+		"App": "10 months"
+	},
+	{
+		"Gross Motor": "Transitions well between sitting and lying",
+		"Range": "7.5 - 10 months",
+		"App": "10 months"
+	},
+	{
+		"Gross Motor": "Pulls to stand",
+		"Range": "6 - 12 months",
+		"App": "12 months"
+	},
+	{
+		"Gross Motor": "Stands without support",
+		"Range": "9 - 16 months",
+		"App": "16 months"
+	},
+	{
+		"Gross Motor": "Takes first independent steps",
+		"Range": "9 - 17 months",
+		"App": "17 months"
+	},
+	{
+		"Gross Motor": "Walks up with 2 feet per step with hand held",
+		"Range": "14 - 22 months",
+		"App": "22 months"
+	},
+	{
+		"Gross Motor": "Jumps off ground with 2 feet",
+		"Range": "21 - 24 months",
+		"App": "24 months"
+	}
+]
+
+export const social = [
+	{
+		"Social Language and Self-Help": "Makes brief eye contact with adult when held",
+		"Range": "0 - 1 month",
+		"App": "1 month"
+	},
+	{
+		"Social Language and Self-Help": "Smiles responsively (ie, social smile)",
+		"Range": "0 - 2 months",
+		"App": "2 months"
+	},
+	{
+		"Social Language and Self-Help": "Helps dress and undress self",
+		"Range": "13 - 24 months",
+		"App": "24 months"
+	},
+	{
+		"Social Language and Self-Help": "Laughs aloud",
+		"Range": "1 - 3 months",
+		"App": "3 months"
+	},
+	{
+		"Social Language and Self-Help": "Begins to turn when name called",
+		"Range": "6 - 9 months",
+		"App": "9 months"
+	},
+	{
+		"Social Language and Self-Help": "Uses basic gestures (holds arms out to be picked up, waves “bye-bye”)",
+		"Range": "7 - 14 months",
+		"App": "14 months"
+	},
+	{
+		"Social Language and Self-Help": "Imitates new gestures",
+		"Range": "10 - 16 months",
+		"App": "16 months"
+	},
+	{
+		"Social Language and Self-Help": "Drinks from cup with little spilling",
+		"Range": "9 - 17 months",
+		"App": "17 months"
+	},
+	{
+		"Social Language and Self-Help": "Imitates scribbling",
+		"Range": "12 - 17 months",
+		"App": "17 months"
+	}
+]
+
+export const verbal = [
+	{
+		"Verbal Language (Expressive and Receptive)": "Cries with discomfort",
+		"Range": "0 - 1 month",
+		"App": "1 month"
+	},
+	{
+		"Verbal Language (Expressive and Receptive)": "Calms to adult voice",
+		"Range": "0 - 1 month",
+		"App": "1 month"
+	},
+	{
+		"Verbal Language (Expressive and Receptive)": "Makes brief short vowel sounds",
+		"Range": "1 - 3 months",
+		"App": "3 months"
+	},
+	{
+		"Verbal Language (Expressive and Receptive)": "Vocalizes with simple cooing",
+		"Range": "1.5 - 4 months",
+		"App": "4 months"
+	},
+	{
+		"Verbal Language (Expressive and Receptive)": "Turns to voice",
+		"Range": "4 - 6 months",
+		"App": "6 months"
+	},
+	{
+		"Verbal Language (Expressive and Receptive)": "Babbles",
+		"Range": "4 - 9 months",
+		"App": "9 months"
+	},
+	{
+		"Verbal Language (Expressive and Receptive)": "Says “Dada” or “Mama” nonspecifically",
+		"Range": "6 - 9 months",
+		"App": "9 months"
+	},
+	{
+		"Verbal Language (Expressive and Receptive)": "Follows a verbal command that includes a gesture",
+		"Range": "9 - 12 months",
+		"App": "12 months"
+	},
+	{
+		"Verbal Language (Expressive and Receptive)": "Says “Dada” or “Mama” specifically",
+		"Range": "7 - 13 months",
+		"App": "13 months"
+	},
+	{
+		"Verbal Language (Expressive and Receptive)": "Uses 1 word other than Mama, Dada, or personal names",
+		"Range": "10 - 15 months",
+		"App": "15 months"
+	},
+	{
+		"Verbal Language (Expressive and Receptive)": "Uses 3 words other than names",
+		"Range": "11 - 18 months",
+		"App": "18 months"
+	},
+	{
+		"Verbal Language (Expressive and Receptive)": "Uses 6–10 words other than names",
+		"Range": "13 - 21 months",
+		"App": "21 months"
+	}
+]
+export const updatedMilestones = [
+	{
+		"milestoneType": "Social Language and Self-help",
+		"milestone": "Makes brief eye contact with adult when held",
+		"Range": "0 - 1 month",
+		"appRange": "1 month"
+	},
+	{
+		"milestoneType": "Social Language and Self-help",
+		"milestone": "Smiles responsively (ie, social smile)",
+		"Range": "0 - 2 months",
+		"appRange": "2 months"
+	},
+	{
+		"milestoneType": "Social Language and Self-help",
+		"milestone": "Helps dress and undress self",
+		"Range": "13 - 24 months",
+		"appRange": "24 months"
+	},
+	{
+		"milestoneType": "Social Language and Self-help",
+		"milestone": "Laughs aloud",
+		"Range": "1 - 3 months",
+		"appRange": "3 months"
+	},
+	{
+		"milestoneType": "Social Language and Self-help",
+		"milestone": "Begins to turn when name called",
+		"Range": "6 - 9 months",
+		"appRange": "9 months"
+	},
+	{
+		"milestoneType": "Social Language and Self-help",
+		"milestone": "Uses basic gestures (holds arms out to be picked up, waves “bye-bye”)",
+		"Range": "7 - 14 months",
+		"appRange": "14 months"
+	},
+	{
+		"milestoneType": "Social Language and Self-help",
+		"milestone": "Imitates new gestures",
+		"Range": "10 - 16 months",
+		"appRange": "16 months"
+	},
+	{
+		"milestoneType": "Social Language and Self-help",
+		"milestone": "Drinks from cup with little spilling",
+		"Range": "9 - 17 months",
+		"appRange": "17 months"
+	},
+	{
+		"milestoneType": "Social Language and Self-help",
+		"milestone": "Imitates scribbling",
+		"Range": "12 - 17 months",
+		"appRange": "17 months"
+	},
+	{
+		"milestoneType": "Verbal Language (Expressive and Receptive)",
+		"milestone": "Cries with discomfort",
+		"Range": "0 - 1 month",
+		"appRange": "1 month"
+	},
+	{
+		"milestoneType": "Verbal Language (Expressive and Receptive)",
+		"milestone": "Calms to adult voice",
+		"Range": "0 - 1 month",
+		"appRange": "1 month"
+	},
+	{
+		"milestoneType": "Verbal Language (Expressive and Receptive)",
+		"milestone": "Makes brief short vowel sounds",
+		"Range": "1 - 3 months",
+		"appRange": "3 months"
+	},
+	{
+		"milestoneType": "Verbal Language (Expressive and Receptive)",
+		"milestone": "Vocalizes with simple cooing",
+		"Range": "1.5 - 4 months",
+		"appRange": "4 months"
+	},
+	{
+		"milestoneType": "Verbal Language (Expressive and Receptive)",
+		"milestone": "Turns to voice",
+		"Range": "4 - 6 months",
+		"appRange": "6 months"
+	},
+	{
+		"milestoneType": "Verbal Language (Expressive and Receptive)",
+		"milestone": "Babbles",
+		"Range": "4 - 9 months",
+		"appRange": "9 months"
+	},
+	{
+		"milestoneType": "Verbal Language (Expressive and Receptive)",
+		"milestone": "Says “Dada” or “Mama” nonspecifically",
+		"Range": "6 - 9 months",
+		"appRange": "9 months"
+	},
+	{
+		"milestoneType": "Verbal Language (Expressive and Receptive)",
+		"milestone": "Follows a verbal command that includes a gesture",
+		"Range": "9 - 12 months",
+		"appRange": "12 months"
+	},
+	{
+		"milestoneType": "Verbal Language (Expressive and Receptive)",
+		"milestone": "Says “Dada” or “Mama” specifically",
+		"Range": "7 - 13 months",
+		"appRange": "13 months"
+	},
+	{
+		"milestoneType": "Verbal Language (Expressive and Receptive)",
+		"milestone": "Uses 1 word other than Mama, Dada, or personal names",
+		"Range": "10 - 15 months",
+		"appRange": "15 months"
+	},
+	{
+		"milestoneType": "Verbal Language (Expressive and Receptive)",
+		"milestone": "Uses 3 words other than names",
+		"Range": "11 - 18 months",
+		"appRange": "18 months"
+	},
+	{
+		"milestoneType": "Verbal Language (Expressive and Receptive)",
+		"milestone": "Uses 6–10 words other than names",
+		"Range": "13 - 21 months",
+		"appRange": "21 months"
+	},
+	{
+		"milestoneType": "Gross Motor",
+		"milestone": "Reflexively moves arms and legs",
+		"Range": "0 - 1 month",
+		"appRange": "1 month"
+	},
+	{
+		"milestoneType": "Gross Motor",
+		"milestone": "Turns head to side when on stomach",
+		"Range": "0 - 1 month",
+		"appRange": "1 month"
+	},
+	{
+		"milestoneType": "Gross Motor",
+		"milestone": "Holds chin up on stomach",
+		"Range": "0 - 3 months",
+		"appRange": "3 months"
+	},
+	{
+		"milestoneType": "Gross Motor",
+		"milestone": "Lifts head and chest in stomach",
+		"Range": "2 - 3.5 months",
+		"appRange": "4 months"
+	},
+	{
+		"milestoneType": "Gross Motor",
+		"milestone": "Supports on elbows and wrists on stomach",
+		"Range": "2.5 - 4.5 months",
+		"appRange": "5 months"
+	},
+	{
+		"milestoneType": "Gross Motor",
+		"milestone": "Rolls over stomach to back",
+		"Range": "2 - 5.5 months",
+		"appRange": "6 months"
+	},
+	{
+		"milestoneType": "Gross Motor",
+		"milestone": "Sits briefly without support",
+		"Range": "4 - 8 months",
+		"appRange": "8 months"
+	},
+	{
+		"milestoneType": "Gross Motor",
+		"milestone": "Sits well without support",
+		"Range": "5 - 9 months",
+		"appRange": "9 months"
+	},
+	{
+		"milestoneType": "Gross Motor",
+		"milestone": "Rolls over back to stomach",
+		"Range": "4 - 10 months",
+		"appRange": "10 months"
+	},
+	{
+		"milestoneType": "Gross Motor",
+		"milestone": "Transitions well between sitting and lying",
+		"Range": "7.5 - 10 months",
+		"appRange": "10 months"
+	},
+	{
+		"milestoneType": "Gross Motor",
+		"milestone": "Pulls to stand",
+		"Range": "6 - 12 months",
+		"appRange": "12 months"
+	},
+	{
+		"milestoneType": "Gross Motor",
+		"milestone": "Stands without support",
+		"Range": "9 - 16 months",
+		"appRange": "16 months"
+	},
+	{
+		"milestoneType": "Gross Motor",
+		"milestone": "Takes first independent steps",
+		"Range": "9 - 17 months",
+		"appRange": "17 months"
+	},
+	{
+		"milestoneType": "Gross Motor",
+		"milestone": "Walks up with 2 feet per step with hand held",
+		"Range": "14 - 22 months",
+		"appRange": "22 months"
+	},
+	{
+		"milestoneType": "Gross Motor",
+		"milestone": "Jumps off ground with 2 feet",
+		"Range": "21 - 24 months",
+		"appRange": "24 months"
+	},
+	{
+		"milestoneType": "Fine Motor",
+		"milestone": "Holds fingers closed",
+		"Range": "0 - 1 month",
+		"appRange": "1 month"
+	},
+	{
+		"milestoneType": "Fine Motor",
+		"milestone": "Grasps reflexively",
+		"Range": "0 - 1 month",
+		"appRange": "1 month"
+	},
+	{
+		"milestoneType": "Fine Motor",
+		"milestone": "Opens and shuts hands",
+		"Range": "2 - 4 months",
+		"appRange": "4 months"
+	},
+	{
+		"milestoneType": "Fine Motor",
+		"milestone": "Grasps object",
+		"Range": "3 - 4 months",
+		"appRange": "4 months"
+	},
+	{
+		"milestoneType": "Fine Motor",
+		"milestone": "Reaches for objects and transfers",
+		"Range": "4.5 - 8 months",
+		"appRange": "8 months"
+	},
+	{
+		"milestoneType": "Fine Motor",
+		"milestone": "Rakes small object with 4 fingers",
+		"Range": "5 - 7 months",
+		"appRange": "7 months"
+	},
+	{
+		"milestoneType": "Fine Motor",
+		"milestone": "Picks up small object with 3 fingers and thumb",
+		"Range": "7 - 11 months",
+		"appRange": "11 months"
+	},
+	{
+		"milestoneType": "Fine Motor",
+		"milestone": "Bangs objects together",
+		"Range": "7 - 11 months",
+		"appRange": "11 months"
+	},
+	{
+		"milestoneType": "Fine Motor",
+		"milestone": "Drops object in a cup",
+		"Range": "10 - 14 months",
+		"appRange": "14 months"
+	},
+	{
+		"milestoneType": "Fine Motor",
+		"milestone": "Throws small ball a few feet while standing",
+		"Range": "10 - 16 months",
+		"appRange": "16 months"
+	},
+	{
+		"milestoneType": "Fine Motor",
+		"milestone": "Scribbles spontaneously",
+		"Range": "12 - 17 months",
+		"appRange": "17 months"
+	},
+	{
+		"milestoneType": "Fine Motor",
+		"milestone": "Drops object in and takes object out of a container",
+		"Range": "13 - 20 months",
+		"appRange": "20 months"
+	}
+]
+export const allmiles = {};
+
+for (var i in updatedMilestones) {
+	let key = updatedMilestones[i].appRange.replace(/\s+[(months)(month)]+/, "");
+	allmiles[key] = allmiles.hasOwnProperty(key) ? [...allmiles[key], updatedMilestones[i]] : [updatedMilestones[i]]
+}
+
+window.allmiles = allmiles;
+
 export const milestones = {
 	1: "On stomach, lifts head, Exclusive breastfeeding",
 	1.5: "On stomach, lifts head, Exclusive breastfeeding",

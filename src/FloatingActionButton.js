@@ -40,7 +40,7 @@ class FloatingActionButtons extends Component {
 			<div>
 				<Button
 					variant="fab"
-					color="primary"
+					color="secondary"
 					aria-label="Add"
 					aria-owns={anchorEl ? "simple-menu" : undefined}
 					aria-haspopup="true"

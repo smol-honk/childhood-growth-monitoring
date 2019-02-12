@@ -1,6 +1,6 @@
 {
 	"name": "childhood-obesity",
-	"homepage": "http://amphithere.github.io/childhood-growth-monitoring/?q=2",
+	"homepage": "http://amphithere.github.io/childhood-growth-monitoring/",
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {

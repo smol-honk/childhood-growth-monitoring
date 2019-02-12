@@ -13,12 +13,7 @@ import * as ss from "simple-statistics";
 
 export const fineMotor = [
 	{
-		"Fine Motor": "Holds fingers closed",
-		"Range": "0 - 1 month",
-		"App": "1 month"
-	},
-	{
-		"Fine Motor": "Grasps reflexively",
+		"Fine Motor": "Holds fingers closed, Grasps reflexively",
 		"Range": "0 - 1 month",
 		"App": "1 month"
 	},
@@ -43,12 +38,7 @@ export const fineMotor = [
 		"App": "7 months"
 	},
 	{
-		"Fine Motor": "Picks up small object with 3 fingers and thumb",
-		"Range": "7 - 11 months",
-		"App": "11 months"
-	},
-	{
-		"Fine Motor": "Bangs objects together",
+		"Fine Motor": "Picks up small object with 3 fingers and thumb, Bangs objects together",
 		"Range": "7 - 11 months",
 		"App": "11 months"
 	},
